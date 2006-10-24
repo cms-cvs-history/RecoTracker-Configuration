@@ -1,0 +1,33 @@
+#
+# Tracker Tracking etc
+#
+
+# Seeds 
+  include "RecoTracker/TkSeedGenerator/data/GlobalMixedSeeds.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalPixelSeeds.cff"                           
+
+# Ckf
+  include "RecoTracker/CkfPattern/data/CkfTrackCandidates.cff"
+
+# Final Fit
+  include "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cff"
+
+
+  # RoadSearchSeedFinder
+  include "RecoTracker/RoadSearchSeedFinder/data/RoadSearchSeeds.cff"
+
+  # RoadSearchCloudMaker
+  include "RecoTracker/RoadSearchCloudMaker/data/RawRoadSearchClouds.cff"
+
+  # RoadSearchCloudMaker
+  include "RecoTracker/RoadSearchCloudCleaner/data/CleanRoadSearchClouds.cff"
+
+  # RoadSearchTrackCandidateMaker
+  include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidates.cff"
+
+  # RS track fit with material 
+  include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
+
+sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks}              
+sequence rstracks  = {roadSearchSeeds, rawRoadSearchClouds, cleanRoadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
+#
