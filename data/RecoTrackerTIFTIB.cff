@@ -1,0 +1,39 @@
+#
+# Tracker Tracking etc
+#
+
+# cosmic track finder seeding
+include "RecoTracker/TkSeedGenerator/data/CosmicSeedTIFTIB.cff"
+
+# cosmic track finder pattern recognition and track fit
+include "RecoTracker/SingleTrackPattern/data/CosmicTrackFinderTIFTIB.cff"
+
+# Seeds 
+include "RecoTracker/SpecialSeedGenerators/data/CombinatorialSeedGeneratorForCosmicsTIFTIB.cff"
+
+# Ckf
+include "RecoTracker/CkfPattern/data/CkfTrackCandidatesTIFTIB.cff"
+
+# Final Fit
+include "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterialTIFTIB.cff"
+
+# RoadSearchSeedFinder
+include "RecoTracker/RoadSearchSeedFinder/data/RoadSearchSeedsTIFTIB.cff"
+
+# RoadSearchCloudMaker
+include "RecoTracker/RoadSearchCloudMaker/data/RoadSearchCloudsTIFTIB.cff"
+
+# RoadSearchTrackCandidateMaker
+include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidatesTIFTIB.cff"
+
+# RS track fit with material 
+include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterialTIFTIB.cff"
+
+# include track info
+include "AnalysisDataFormats/TrackInfo/data/TrackInfoProducerTIFTIB.cff"
+
+sequence ckftracksTIFTIB = {combinatorialcosmicseedfinderTIFTIB, ckfTrackCandidatesTIFTIB,ctfWithMaterialTracksTIFTIB}      
+sequence rstracksTIFTIB = {roadSearchSeedsTIFTIB, roadSearchCloudsTIFTIB, rsTrackCandidatesTIFTIB, rsWithMaterialTracksTIFTIB}
+sequence cosmictracksTIFTIB = {cosmicseedfinderTIFTIB, cosmictrackfinderTIFTIB}
+
+sequence tracksTIFTIB = {cosmictracksTIFTIB, ckftracksTIFTIB, rstracksTIFTIB, trackinfoTIFTIB}
