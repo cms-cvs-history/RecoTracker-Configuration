@@ -30,7 +30,7 @@ include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidate
 include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterialTIFTIB.cff"
 
 # include track info
-include "AnalysisDataFormats/TrackInfo/data/TrackInfoProducerTIFTIB.cff"
+include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducerTIFTIB.cff"
 
 sequence ckftracksTIFTIB = {combinatorialcosmicseedfinderTIFTIB, ckfTrackCandidatesTIFTIB,ctfWithMaterialTracksTIFTIB}      
 sequence rstracksTIFTIB = {roadSearchSeedsTIFTIB, roadSearchCloudsTIFTIB, rsTrackCandidatesTIFTIB, rsWithMaterialTracksTIFTIB}
