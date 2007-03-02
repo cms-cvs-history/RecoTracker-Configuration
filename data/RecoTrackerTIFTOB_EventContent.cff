@@ -1,10 +1,6 @@
 #Full Event content 
 block RecoTrackerFEVT = {
   untracked vstring outputCommands = {
-#Seeds
-   "keep *_TrajectorySeeds_*_*",
-#Track Candidates
-   "keep *_TrackCandidates_*_*",
 #Tracks
     "keep *_ctfWithMaterialTracksTIFTOB_*_*",
     "keep *_rsWithMaterialTracksTIFTOB_*_*"
