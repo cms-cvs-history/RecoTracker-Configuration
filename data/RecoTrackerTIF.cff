@@ -3,7 +3,7 @@
 #
 
 # cosmic track finder seeding
-include "RecoTracker/TkSeedGenerator/data/CosmicSeedTIF.cff"
+include "RecoTracker/SpecialSeedGenerators/data/CosmicSeedTIF.cff"
 
 # cosmic track finder pattern recognition and track fit
 include "RecoTracker/SingleTrackPattern/data/CosmicTrackFinderTIF.cff"
