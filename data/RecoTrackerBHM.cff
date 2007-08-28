@@ -1,0 +1,11 @@
+#seeds
+include "RecoTracker/SpecialSeedGenerators/data/CombinatorialSeedGeneratorForBeamHalo.cff"
+
+#Ckf
+include "RecoTracker/CkfPattern/data/CkfTrackCandidatesBHM.cff"
+
+#Final fit
+include "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterialBHM.cff"
+
+sequence tracksBeamHaloMuon = { combinatorialbeamhaloseedfinder , ckfTrackCandidatesBeamHaloMuon , ctfWithMaterialTracksBeamHaloMuon } 
+
