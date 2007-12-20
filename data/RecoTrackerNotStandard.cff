@@ -1,0 +1,29 @@
+#
+# Tracker Tracking etc
+#
+
+# Seeds 
+  include "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromPairsWithVertices.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromTripletsWithVertices.cff"
+
+  include "RecoTracker/TkSeedGenerator/data/GlobalMixedSeeds.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalPixelSeeds.cff"                           
+  include "RecoTracker/TkSeedGenerator/data/GlobalPixelLessSeeds.cff"                           
+
+# Ckf
+  include "RecoTracker/CkfPattern/data/CkfTrackCandidatesNoOverlaps.cff"
+  include "RecoTracker/CkfPattern/data/CkfTrackCandidatesPixelLess.cff"
+  include "RecoTracker/CkfPattern/data/CkfTrackCandidatesCombinedSeeds.cff"
+
+# Final Fit
+  include "RecoTracker/TrackProducer/data/CTFNoOverlaps.cff"
+  include "RecoTracker/TrackProducer/data/CTFPixelLess.cff"
+  include "RecoTracker/TrackProducer/data/CTFCombinedSeeds.cff"
+
+
+sequence ctfTracksNoOverlaps = {ckfTrackCandidatesNoOverlaps,ctfNoOverlaps}              
+sequence ctfTracksPixelLess = {globalPixelLessSeeds, ckfTrackCandidatesPixelLess,ctfPixelLess}              
+sequence ctfTracksCombinedSeeds = {globalSeedsFromPairsWithVertices, globalSeedsFromTripletsWithVertices,globalCombinedSeeds,
+                  	           ckfTrackCandidatesCombinedSeeds,ctfCombinedSeeds}              
+
