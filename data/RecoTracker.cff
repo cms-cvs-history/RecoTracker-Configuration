@@ -70,12 +70,6 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace generalTracks.d0_par2 = { 0.55, 4. }
   replace generalTracks.dz_par2 = { 0.45, 4. }
 
-
-  sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
-                          newTrackCandidateMaker,
-                          preFilterCmsTracks,
-                          generalTracks}
-
 #######################################################################################
 
 
@@ -83,6 +77,12 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 
 
 
-### sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
-sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks,newTracking}              
+sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
+sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
+                        newTrackCandidateMaker,
+                        preFilterCmsTracks,
+                        generalTracks}
+
+#sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks,newTracking}              
+
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
