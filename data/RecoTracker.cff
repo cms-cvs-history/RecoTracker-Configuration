@@ -24,5 +24,105 @@ include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidate
 # RS track fit with material 
 include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 
+############ new tracking configuration ################
+### it is placed here as a temporary solution
+
+### TransientTRH builder with template
+  include "RecoLocalTracker/SiPixelRecHits/data/PixelCPETemplateReco.cfi"
+  es_module newTTRHB = ttrhbwr from "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
+  replace newTTRHB.ComponentName = "WithAngleAndTemplate"
+  replace newTTRHB.PixelCPE = "PixelCPETemplateReco"
+
+
+### Seeding 
+  include "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromPairsWithVertices.cff"
+  include "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromTripletsWithVertices.cff"
+
+  module newSeedFromPairs = globalSeedsFromPairsWithVertices from "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromPairsWithVertices.cfi"
+  replace newSeedFromPairs.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+
+  module newSeedFromTriplets = globalSeedsFromTripletsWithVertices from "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromTripletsWithVertices.cfi"
+  replace newSeedFromTriplets.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module newCombinedSeeds = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace newCombinedSeeds.PairCollection = "newSeedFromPairs"
+  replace newCombinedSeeds.TripletCollection = "newSeedFromTriplets"
+
+### Building
+  #es_module newTrajectoryFilter = trajectoryFilterESProducer from "TrackingTools/TrajectoryFiltering/data/TrajectoryFilterESProducer.cfi"
+  #replace newTrajectoryFilter.ComponentName = "newTrajectoryFilter"
+  ##replace newTrajectoryFilter.filterPset.minimumNumberOfHits = 3 
+  ##replace newTrajectoryFilter.filterPset.minPt = 0.3
+
+  es_module newTrajectoryBuilder = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace newTrajectoryBuilder.ComponentName = "newTrajectoryBuilder"
+  #replace newTrajectoryBuilder.trajectoryFilterName =  "newTrajectoryFilter"
+  replace newTrajectoryBuilder.ptCut = 0.3
+  replace newTrajectoryBuilder.minimumNumberOfHits = 3
+
+  module newTrackCandidateMaker = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace newTrackCandidateMaker.SeedProducer = "newCombinedSeeds"
+  replace newTrackCandidateMaker.TrajectoryBuilder = "newTrajectoryBuilder"
+
+### Final Fitting
+  module preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks.src = "newTrackCandidateMaker"
+
+  module preFilterCmsTracksWithTemplate = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracksWithTemplate.src = "newTrackCandidateMaker"
+  replace preFilterCmsTracksWithTemplate.TTRHBuilder = "WithAngleAndTemplate"
+
+### Collection cleaning (general tracks)
+  module generalTracks = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks.src = preFilterCmsTracks
+  ##replace generalTracks.src = ctfWithMaterialTracks
+  replace generalTracks.chi2n_par = 2.0
+  replace generalTracks.d0_par1 = { 0.55, 4. }
+  replace generalTracks.dz_par1 = { 0.65, 4. }
+  replace generalTracks.d0_par2 = { 0.55, 4. }
+  replace generalTracks.dz_par2 = { 0.45, 4. }
+
+  module generalTracksWithTemplate = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi"
+  replace generalTracksWithTemplate.src = preFilterCmsTracksWithTemplate
+  ##replace generalTracks.src = ctfWithMaterialTracks
+  replace generalTracksWithTemplate.chi2n_par = 2.0   
+  replace generalTracksWithTemplate.d0_par1 = { 0.55, 4. }
+  replace generalTracksWithTemplate.dz_par1 = { 0.65, 4. }
+  replace generalTracksWithTemplate.d0_par2 = { 0.55, 4. }
+  replace generalTracksWithTemplate.dz_par2 = { 0.45, 4. }
+
+
+### Collection cleaning (high purity tracks)
+  module highPurityTracks = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace highPurityTracks.src = generalTracks
+  ##replace highPurityTracks.src = ctfWithMaterialTracks
+  replace highPurityTracks.chi2n_par = 0.9
+  replace highPurityTracks.d0_par1 = { 0.30, 4. }
+  replace highPurityTracks.dz_par1 = { 0.35, 4. }
+  replace highPurityTracks.d0_par2 = { 0.40, 4. }
+  replace highPurityTracks.dz_par2 = { 0.40, 4. }
+#######################################################################################
+
+
+
+
+
+
+sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
+
+sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
+                        newTrackCandidateMaker,
+                        preFilterCmsTracks,
+                        generalTracks}
+
+sequence newTrackingWithTemplate = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
+	                            newTrackCandidateMaker,
+            	                    preFilterCmsTracksWithTemplate, 
+                       	            generalTracksWithTemplate}
+
+
+#sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks,newTracking}              
+
 sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks}              
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
