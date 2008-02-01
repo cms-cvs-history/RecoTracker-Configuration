@@ -109,8 +109,6 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 
 
 
-sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
-
 sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
                         newTrackCandidateMaker,
                         preFilterCmsTracks,
@@ -121,8 +119,7 @@ sequence newTrackingWithTemplate = {newSeedFromPairs,newSeedFromTriplets,newComb
             	                    preFilterCmsTracksWithTemplate, 
                        	            generalTracksWithTemplate}
 
-
+sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
 #sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks,newTracking}              
 
-sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks}              
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
