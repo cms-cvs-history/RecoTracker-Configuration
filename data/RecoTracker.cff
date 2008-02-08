@@ -27,6 +27,415 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 ############ new tracking configuration ################
 ### it is placed here as a temporary solution
 
+
+
+######### configuration2 ################
+
+  module seedFromPairs2 = globalMixedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalMixedSeeds.cfi"
+  replace seedFromPairs2.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+
+  module seedFromTriplets2 = globalSeedsFromTripletsWithVertices from "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromTripletsWithVertices.cfi"
+  replace seedFromTriplets2.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds2 = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds2.PairCollection = "seedFromPairs2"
+  replace combinedSeeds2.TripletCollection = "seedFromTriplets2"
+
+  es_module trajectoryBuilder2 = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder2.ComponentName = "trajectoryBuilder2"
+  replace trajectoryBuilder2.ptCut = 0.3
+  replace trajectoryBuilder2.minimumNumberOfHits = 3
+
+  module trackCandidateMaker2 = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker2.SeedProducer = "combinedSeeds2"
+  replace trackCandidateMaker2.TrajectoryBuilder = "trajectoryBuilder2"
+
+
+  module preFilterCmsTracks2 = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks2.src = "trackCandidateMaker2"
+
+  module generalTracks2 = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks2.src = preFilterCmsTracks2
+
+  sequence test2 = {seedFromPairs2,seedFromTriplets2,combinedSeeds2,trackCandidateMaker2,preFilterCmsTracks2,generalTracks2}
+
+#########################################
+
+######### configuration3a ################
+
+  module seedFromPairs3a = globalSeedsFromPairsWithVertices from "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromPairsWithVertices.cfi"
+  replace seedFromPairs3a.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+
+  module seedFromTriplets3a = globalSeedsFromTripletsWithVertices from "RecoTracker/TkSeedGenerator/data/GlobalSeedsFromTripletsWithVertices.cfi"
+  replace seedFromTriplets3a.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds3a = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds3a.PairCollection = "seedFromPairs3a"
+  replace combinedSeeds3a.TripletCollection = "seedFromTriplets3a"
+
+  es_module trajectoryBuilder3a = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder3a.ComponentName = "trajectoryBuilder3a"
+  replace trajectoryBuilder3a.ptCut = 0.3
+  replace trajectoryBuilder3a.minimumNumberOfHits = 3
+
+  module trackCandidateMaker3a = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker3a.SeedProducer = "combinedSeeds3a"
+  replace trackCandidateMaker3a.TrajectoryBuilder = "trajectoryBuilder3a"
+
+
+  module preFilterCmsTracks3a = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks3a.src = "trackCandidateMaker3a"
+
+  module generalTracks3a = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks3a.src = preFilterCmsTracks3a
+
+  sequence test3a = {seedFromPairs3a,seedFromTriplets3a,combinedSeeds3a,trackCandidateMaker3a,preFilterCmsTracks3a,generalTracks3a}
+
+#########################################
+
+######### configuration3b ################
+
+module seedFromPairs3b = SeedGeneratorFromRegionHitsEDProducer {
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalRegionProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegion.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .0001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitPairGenerator"
+    string SeedingLayers = "MixedLayerPairs"
+  }
+
+}
+
+
+module seedFromTriplets3b = SeedGeneratorFromRegionHitsEDProducer {
+
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalRegionProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegion.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .0001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitTripletGenerator"
+    string SeedingLayers = "PixelLayerTriplets"
+    include "RecoPixelVertexing/PixelTriplets/data/PixelTripletHLTGenerator.cfi"
+  }
+
+}
+
+
+  replace seedFromPairs3b.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+  replace seedFromTriplets3b.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds3b = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds3b.PairCollection = "seedFromPairs3b"
+  replace combinedSeeds3b.TripletCollection = "seedFromTriplets3b"
+
+  es_module trajectoryBuilder3b = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder3b.ComponentName = "trajectoryBuilder3b"
+  replace trajectoryBuilder3b.ptCut = 0.3
+  replace trajectoryBuilder3b.minimumNumberOfHits = 3
+
+  module trackCandidateMaker3b = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker3b.SeedProducer = "combinedSeeds3b"
+  replace trackCandidateMaker3b.TrajectoryBuilder = "trajectoryBuilder3b"
+
+
+  module preFilterCmsTracks3b = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks3b.src = "trackCandidateMaker3b"
+
+  module generalTracks3b = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks3b.src = preFilterCmsTracks3b
+
+  sequence test3b = {seedFromPairs3b,seedFromTriplets3b,combinedSeeds3b,trackCandidateMaker3b,preFilterCmsTracks3b,generalTracks3b}
+
+#########################################
+
+######### configuration3c ################
+
+module seedFromPairs3c = SeedGeneratorFromRegionHitsEDProducer {
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalRegionProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegion.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitPairGenerator"
+    string SeedingLayers = "MixedLayerPairs"
+  }
+
+}
+
+
+module seedFromTriplets3c = SeedGeneratorFromRegionHitsEDProducer {
+
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalRegionProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegion.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitTripletGenerator"
+    string SeedingLayers = "PixelLayerTriplets"
+    include "RecoPixelVertexing/PixelTriplets/data/PixelTripletHLTGenerator.cfi"
+  }
+
+}
+
+
+  replace seedFromPairs3c.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+  replace seedFromTriplets3c.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds3c = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds3c.PairCollection = "seedFromPairs3c"
+  replace combinedSeeds3c.TripletCollection = "seedFromTriplets3c"
+
+  es_module trajectoryBuilder3c = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder3c.ComponentName = "trajectoryBuilder3c"
+  replace trajectoryBuilder3c.ptCut = 0.3
+  replace trajectoryBuilder3c.minimumNumberOfHits = 3
+
+  module trackCandidateMaker3c = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker3c.SeedProducer = "combinedSeeds3c"
+  replace trackCandidateMaker3c.TrajectoryBuilder = "trajectoryBuilder3c"
+
+
+  module preFilterCmsTracks3c = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks3c.src = "trackCandidateMaker3c"
+
+  module generalTracks3c = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks3c.src = preFilterCmsTracks3c
+
+  sequence test3c = {seedFromPairs3c,seedFromTriplets3c,combinedSeeds3c,trackCandidateMaker3c,preFilterCmsTracks3c,generalTracks3c}
+
+#########################################
+
+######### configuration4 ################
+
+module seedFromPairs4 = SeedGeneratorFromRegionHitsEDProducer {
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalTrackingRegionWithVerticesProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegionWithVertices.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitPairGenerator"
+    string SeedingLayers = "MixedLayerPairs"
+  }
+
+}
+
+
+module seedFromTriplets4 = SeedGeneratorFromRegionHitsEDProducer {
+
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalTrackingRegionWithVerticesProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegionWithVertices.cfi"
+  }
+
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitTripletGenerator"
+    string SeedingLayers = "PixelLayerTriplets"
+    include "RecoPixelVertexing/PixelTriplets/data/PixelTripletHLTGenerator.cfi"
+  }
+
+}
+
+
+  replace seedFromPairs4.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+  replace seedFromTriplets4.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds4 = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds4.PairCollection = "seedFromPairs4"
+  replace combinedSeeds4.TripletCollection = "seedFromTriplets4"
+
+  es_module trajectoryBuilder4 = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder4.ComponentName = "trajectoryBuilder4"
+  replace trajectoryBuilder4.ptCut = 0.3
+  replace trajectoryBuilder4.minimumNumberOfHits = 3
+
+  module trackCandidateMaker4 = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker4.SeedProducer = "combinedSeeds4"
+  replace trackCandidateMaker4.TrajectoryBuilder = "trajectoryBuilder4"
+
+
+  module preFilterCmsTracks4 = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks4.src = "trackCandidateMaker4"
+
+  module generalTracks4 = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks4.src = preFilterCmsTracks4
+
+  sequence test4 = {seedFromPairs4,seedFromTriplets4,combinedSeeds4,trackCandidateMaker4,preFilterCmsTracks4,generalTracks4}
+
+#########################################
+
+######### configuration5 ################
+
+module seedFromPairs5 = SeedGeneratorFromRegionHitsEDProducer {
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalTrackingRegionWithVerticesProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegionWithVertices.cfi"
+  }
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitPairGenerator"
+    string SeedingLayers = "MixedLayerPairs"
+  }
+
+}
+
+
+module seedFromTriplets5 = SeedGeneratorFromRegionHitsEDProducer {
+
+  string TTRHBuilder        =  "WithTrackAngle"
+
+  PSet RegionFactoryPSet = {
+    string ComponentName = "GlobalTrackingRegionWithVerticesProducer"
+    include "RecoTracker/TkTrackingRegions/data/GlobalTrackingRegionWithVertices.cfi"
+  }
+
+
+ PSet SeedComparitorPSet = {
+        string ComponentName = "SeedComparitorWithPixelStubs"
+        double betaCutFactor = 2.0
+        string method = "templates"
+        double tempCutFactor = .001
+        double TanLorentzAnglePerTesla = 0.106
+        bool Alpha2Order = true
+        int32 speed =3
+        }
+
+  PSet OrderedHitsFactoryPSet = {
+    string ComponentName = "StandardHitTripletGenerator"
+    string SeedingLayers = "PixelLayerTriplets"
+    include "RecoPixelVertexing/PixelTriplets/data/PixelTripletHLTGenerator.cfi"
+  }
+
+}
+
+
+  replace seedFromPairs5.RegionFactoryPSet.RegionPSet.ptMin = 0.9
+  replace seedFromTriplets5.RegionFactoryPSet.RegionPSet.ptMin = 0.5
+
+  module combinedSeeds5 = globalCombinedSeeds from "RecoTracker/TkSeedGenerator/data/GlobalCombinedSeeds.cfi"
+  replace combinedSeeds5.PairCollection = "seedFromPairs5"
+  replace combinedSeeds5.TripletCollection = "seedFromTriplets5"
+
+  es_module trajectoryBuilder5 = GroupedCkfTrajectoryBuilder from "RecoTracker/CkfPattern/data/GroupedCkfTrajectoryBuilderESProducer.cfi"
+  replace trajectoryBuilder5.ComponentName = "trajectoryBuilder5"
+  replace trajectoryBuilder5.ptCut = 0.3
+  replace trajectoryBuilder5.minimumNumberOfHits = 3
+
+  module trackCandidateMaker5 = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
+  replace trackCandidateMaker5.SeedProducer = "combinedSeeds5"
+  replace trackCandidateMaker5.TrajectoryBuilder = "trajectoryBuilder5"
+
+
+  include "RecoLocalTracker/SiPixelRecHits/data/PixelCPETemplateReco.cfi"
+  es_module newTTRHB5 = ttrhbwr from "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
+  replace newTTRHB5.ComponentName = "WithAngleAndTemplate5"
+  replace newTTRHB5.PixelCPE = "PixelCPETemplateReco"
+
+
+  module preFilterCmsTracks5 = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterCmsTracks5.src = "trackCandidateMaker5"
+  replace preFilterCmsTracks5.TTRHBuilder = "WithAngleAndTemplate5"
+
+  module generalTracks5 = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
+  replace generalTracks5.src = preFilterCmsTracks5
+
+  sequence test5 = {seedFromPairs5,seedFromTriplets5,combinedSeeds5,trackCandidateMaker5,preFilterCmsTracks5,generalTracks5}
+
+#########################################
+
+
+
 ### TransientTRH builder with template
   include "RecoLocalTracker/SiPixelRecHits/data/PixelCPETemplateReco.cfi"
   es_module newTTRHB = ttrhbwr from "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
