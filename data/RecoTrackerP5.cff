@@ -1,0 +1,28 @@
+#
+# Tracking configuration file fragment for P5 cosmic running
+#
+
+## COSMIC TRACK FINDER
+include "RecoTracker/SpecialSeedGenerators/data/CosmicSeedP5Pairs.cff"
+include "RecoTracker/SingleTrackPattern/data/CosmicTrackFinderP5.cff"
+#chi2 set to 40!!
+
+## CTF
+include "RecoTracker/SpecialSeedGenerators/data/CombinatorialSeedGeneratorForCosmicsP5.cff"
+include "RecoTracker/CkfPattern/data/CkfTrackCandidatesP5.cff"
+include "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterialP5.cff"
+
+## ROACH SEARCH
+include "RecoTracker/RoadSearchSeedFinder/data/RoadSearchSeedsP5.cff"
+include "RecoTracker/RoadSearchCloudMaker/data/RoadSearchCloudsP5.cff"
+include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidatesP5.cff"
+include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterialP5.cff"
+
+## TRACK INFO
+include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducerP5.cff"
+
+sequence ctftracksP5 = {combinatorialcosmicseedfinderP5, ckfTrackCandidatesP5,ctfWithMaterialTracksP5}
+sequence rstracksP5  = {roadSearchSeedsP5, roadSearchCloudsP5, rsTrackCandidatesP5, rsWithMaterialTracksP5}
+sequence cosmictracksP5 = {cosmicseedfinderP5, cosmictrackfinderP5}
+
+sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5, trackinfoP5}
