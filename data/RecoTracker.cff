@@ -58,8 +58,15 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace newTrackCandidateMaker.TrajectoryBuilder = "newTrajectoryBuilder"
 
 ### Final Fitting
-  module preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  #TransientTRH builder with template
+  include "RecoLocalTracker/SiPixelRecHits/data/PixelCPETemplateReco.cfi"
+  es_module newTTRHB = ttrhbwr from "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
+  replace newTTRHB.ComponentName = "WithAngleAndTemplate"
+  replace newTTRHB.PixelCPE = "PixelCPETemplateReco"
+
+  module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
   replace preFilterCmsTracks.src = "newTrackCandidateMaker"
+  replace preFilterCmsTracks.TTRHBuilder =  "WithAngleAndTemplate"
 
 ### Collection cleaning
   module generalTracks = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
@@ -77,12 +84,12 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 
 
 
-sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
+#sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
 sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
                         newTrackCandidateMaker,
                         preFilterCmsTracks,
                         generalTracks}
 
-#sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks,newTracking}              
+sequence ckftracks = {newTracking}              
 
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
