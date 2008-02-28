@@ -1,6 +1,10 @@
+
 #
 # Tracker Tracking
 #
+  
+# general CPEs 
+  include "RecoLocalTracker/SiPixelRecHits/data/PixelCPEESProducers.cff" 
 
 # TTRHBuilders
   include "RecoTracker/TransientTrackingRecHit/data/TTRHBuilders.cff"
