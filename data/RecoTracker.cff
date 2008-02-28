@@ -2,6 +2,9 @@
 # Tracker Tracking
 #
 
+# TTRHBuilders
+  include "RecoTracker/TransientTrackingRecHit/data/TTRHBuilders.cff"
+
 # Seeds 
   include "RecoTracker/TkSeedGenerator/data/GlobalMixedSeeds.cff"
   include "RecoTracker/TkSeedGenerator/data/GlobalPixelSeeds.cff"                           
@@ -58,12 +61,6 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace newTrackCandidateMaker.TrajectoryBuilder = "newTrajectoryBuilder"
 
 ### Final Fitting
-  #TransientTRH builder with template
-  include "RecoLocalTracker/SiPixelRecHits/data/PixelCPETemplateReco.cfi"
-  es_module newTTRHB = ttrhbwr from "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
-  replace newTTRHB.ComponentName = "WithAngleAndTemplate"
-  replace newTTRHB.PixelCPE = "PixelCPETemplateReco"
-
   module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
   replace preFilterCmsTracks.src = "newTrackCandidateMaker"
   replace preFilterCmsTracks.TTRHBuilder =  "WithAngleAndTemplate"
