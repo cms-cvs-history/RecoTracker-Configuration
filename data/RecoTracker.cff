@@ -69,6 +69,7 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
   replace preFilterCmsTracks.src = "newTrackCandidateMaker"
   replace preFilterCmsTracks.TTRHBuilder =  "WithAngleAndTemplate"
+  replace preFilterCmsTracks.AlgorithmName =  "ctf"
 
 ### Collection cleaning
   module generalTracks = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
