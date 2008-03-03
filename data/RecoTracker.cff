@@ -63,6 +63,7 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   module newTrackCandidateMaker = ckfTrackCandidates from "RecoTracker/CkfPattern/data/CkfTrackCandidates.cfi"
   replace newTrackCandidateMaker.SeedProducer = "newCombinedSeeds"
   replace newTrackCandidateMaker.TrajectoryBuilder = "newTrajectoryBuilder"
+  replace newTrackCandidateMaker.useHitsSplitting = true
 
 ### Final Fitting
   module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
