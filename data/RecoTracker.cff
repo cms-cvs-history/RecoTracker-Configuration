@@ -66,9 +66,15 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace newTrackCandidateMaker.useHitsSplitting = true
 
 ### Final Fitting
+  es_module FittingSmootherWithOutlierRejection = RKFittingSmoother from "TrackingTools/TrackFitters/data/RungeKuttaKFFittingSmootherESProducer.cfi"
+  replace FittingSmootherWithOutlierRejection.ComponentName = "FittingSmootherWithOutlierRejection"	
+  replace FittingSmootherWithOutlierRejection.EstimateCut = 20
+  replace FittingSmootherWithOutlierRejection.MinNumberOfHits = 3
+
   module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
   replace preFilterCmsTracks.src = "newTrackCandidateMaker"
   replace preFilterCmsTracks.TTRHBuilder =  "WithAngleAndTemplate"
+  replace preFilterCmsTracks.Fitter = "FittingSmootherWithOutlierRejection"
   replace preFilterCmsTracks.AlgorithmName =  "ctf"
 
 ### Collection cleaning
