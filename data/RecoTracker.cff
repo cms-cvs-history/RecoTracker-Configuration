@@ -77,27 +77,17 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace preFilterCmsTracks.Fitter = "FittingSmootherWithOutlierRejection"
   replace preFilterCmsTracks.AlgorithmName =  "ctf"
 
-### Collection cleaning
-  module generalTracks = selectCKF from "RecoTracker/FinalTrackSelectors/data/selectCKF.cfi" 
-  replace generalTracks.src = preFilterCmsTracks
-  replace generalTracks.chi2n_par = 2.0
-  replace generalTracks.d0_par1 = { 0.55, 4. }
-  replace generalTracks.dz_par1 = { 0.65, 4. }
-  replace generalTracks.d0_par2 = { 0.55, 4. }
-  replace generalTracks.dz_par2 = { 0.45, 4. }
+### Collection cleaning and quality
+  include "RecoTracker/FinalTrackSelectors/data/TracksWithQuality.cff"
+  // defines sequence tracksWithQuality, input is preFilterCmsTracks, output is generalTracks
 
 #######################################################################################
-
-
-
-
-
 
 #sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
 sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
                         newTrackCandidateMaker,
                         preFilterCmsTracks,
-                        generalTracks}
+                        tracksWithQuality}
 
 sequence ckftracks = {newTracking}              
 
