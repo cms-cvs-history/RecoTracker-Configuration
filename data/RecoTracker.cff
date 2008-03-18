@@ -64,6 +64,7 @@ include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
   replace newTrackCandidateMaker.SeedProducer = "newCombinedSeeds"
   replace newTrackCandidateMaker.TrajectoryBuilder = "newTrajectoryBuilder"
   replace newTrackCandidateMaker.useHitsSplitting = true
+  replace newTrackCandidateMaker.doSeedingRegionRebuilding = true
 
 ### Final Fitting
   es_module FittingSmootherWithOutlierRejection = RKFittingSmoother from "TrackingTools/TrackFitters/data/RungeKuttaKFFittingSmootherESProducer.cfi"
