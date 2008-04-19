@@ -2,9 +2,13 @@
 block RecoTrackerFEVT = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracks_*_*",
-    "keep *_generalTracks_*_*",
-    "keep *_rsWithMaterialTracks_*_*"
+    "keep recoTracks_generalTracks_*_*",
+    "keep recoTrackExtras_generalTracks_*_*",
+    "keep TrackingRecHitsOwned_generalTracks_*_*",
+
+    "keep recoTracks_rsWithMaterialTracks_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracks_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*"
   }		
 }	
 
@@ -12,9 +16,13 @@ block RecoTrackerFEVT = {
 block RecoTrackerRECO = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracks_*_*",
-    "keep *_generalTracks_*_*",
-    "keep *_rsWithMaterialTracks_*_*"
+    "keep recoTracks_generalTracks_*_*",
+    "keep recoTrackExtras_generalTracks_*_*",
+    "keep TrackingRecHitsOwned_generalTracks_*_*",
+
+    "keep recoTracks_rsWithMaterialTracks_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracks_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*"
   }		
 }	
 
@@ -22,7 +30,6 @@ block RecoTrackerRECO = {
 block RecoTrackerAOD = {
   untracked vstring outputCommands = {
 #Tracks without extra and hits
-    "keep recoTracks_ctfWithMaterialTracks_*_*",
     "keep recoTracks_generalTracks_*_*",
     "keep recoTracks_rsWithMaterialTracks_*_*"
   }		
