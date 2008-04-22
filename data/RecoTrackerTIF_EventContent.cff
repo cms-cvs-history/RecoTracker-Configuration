@@ -8,7 +8,11 @@ block RecoTrackerFEVT = {
 
     "keep recoTracks_rsWithMaterialTracksTIF_*_*",
     "keep recoTrackExtras_rsWithMaterialTracksTIF_*_*",
-    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*"
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*",
+
+    "keep recoTracks_cosmictrackfinderTIF_*_*",
+    "keep recoTrackExtras_cosmictrackfinderTIF_*_*",
+    "keep TrackingRecHitsOwned_cosmictrackfinderTIF_*_*"
   }		
 }	
 
@@ -22,7 +26,11 @@ block RecoTrackerRECO = {
 
     "keep recoTracks_rsWithMaterialTracksTIF_*_*",
     "keep recoTrackExtras_rsWithMaterialTracksTIF_*_*",
-    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*"
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*",
+
+    "keep recoTracks_cosmictrackfinderTIF_*_*",
+    "keep recoTrackExtras_cosmictrackfinderTIF_*_*",
+    "keep TrackingRecHitsOwned_cosmictrackfinderTIF_*_*"
   }		
 }	
 
@@ -31,6 +39,7 @@ block RecoTrackerAOD = {
   untracked vstring outputCommands = {
 #Tracks without extra and hits
     "keep recoTracks_ctfWithMaterialTracksTIF_*_*",
-    "keep recoTracks_rsWithMaterialTracksTIF_*_*"
+    "keep recoTracks_rsWithMaterialTracksTIF_*_*",
+    "keep recoTracks_cosmictrackfinderTIF_*_*"
   }		
 }	
