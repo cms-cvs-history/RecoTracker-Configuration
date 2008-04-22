@@ -19,10 +19,11 @@ include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidate
 include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterialP5.cff"
 
 ## TRACK INFO
-include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducerP5.cff"
+#include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducerP5.cff"
 
 sequence ctftracksP5 = {combinatorialcosmicseedfinderP5, ckfTrackCandidatesP5,ctfWithMaterialTracksP5}
 sequence rstracksP5  = {roadSearchSeedsP5, roadSearchCloudsP5, rsTrackCandidatesP5, rsWithMaterialTracksP5}
 sequence cosmictracksP5 = {cosmicseedfinderP5, cosmictrackfinderP5}
 
-sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5, trackinfoP5}
+#sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5, trackinfoP5}
+sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5}
