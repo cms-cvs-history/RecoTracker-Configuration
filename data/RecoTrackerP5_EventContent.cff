@@ -2,8 +2,13 @@
 block RecoTrackerFEVT = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksP5_*_*",
-    "keep *_rsWithMaterialTracksP5_*_*"
+    "keep recoTracks_ctfWithMaterialTracksP5_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksP5_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksP5_*_*",
+
+    "keep recoTracks_rsWithMaterialTracksP5_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracksP5_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksP5_*_*"
   }		
 }	
 
@@ -11,8 +16,13 @@ block RecoTrackerFEVT = {
 block RecoTrackerRECO = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksP5_*_*",
-    "keep *_rsWithMaterialTracksP5_*_*"
+    "keep recoTracks_ctfWithMaterialTracksP5_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksP5_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksP5_*_*",
+
+    "keep recoTracks_rsWithMaterialTracksP5_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracksP5_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksP5_*_*"
   }		
 }	
 

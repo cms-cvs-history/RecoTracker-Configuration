@@ -2,8 +2,13 @@
 block RecoTrackerFEVT = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksTIF_*_*",
-    "keep *_rsWithMaterialTracksTIF_*_*"
+    "keep recoTracks_ctfWithMaterialTracksTIF_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksTIF_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksTIF_*_*",
+
+    "keep recoTracks_rsWithMaterialTracksTIF_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracksTIF_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*"
   }		
 }	
 
@@ -11,8 +16,13 @@ block RecoTrackerFEVT = {
 block RecoTrackerRECO = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksTIF_*_*",
-    "keep *_rsWithMaterialTracksTIF_*_*"
+    "keep recoTracks_ctfWithMaterialTracksTIF_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksTIF_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksTIF_*_*",
+
+    "keep recoTracks_rsWithMaterialTracksTIF_*_*",
+    "keep recoTrackExtras_rsWithMaterialTracksTIF_*_*",
+    "keep TrackingRecHitsOwned_rsWithMaterialTracksTIF_*_*"
   }		
 }	
 

@@ -2,7 +2,9 @@
 block RecoTrackerFEVT = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksBeamHaloMuon_*_*"
+    "keep recoTracks_ctfWithMaterialTracksBeamHaloMuon_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksBeamHaloMuon_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksBeamHaloMuon_*_*"
   }		
 }	
 
@@ -10,7 +12,9 @@ block RecoTrackerFEVT = {
 block RecoTrackerRECO = {
   untracked vstring outputCommands = {
 #Tracks
-    "keep *_ctfWithMaterialTracksBeamHaloMuon_*_*"
+    "keep recoTracks_ctfWithMaterialTracksBeamHaloMuon_*_*",
+    "keep recoTrackExtras_ctfWithMaterialTracksBeamHaloMuon_*_*",
+    "keep TrackingRecHitsOwned_ctfWithMaterialTracksBeamHaloMuon_*_*"
   }		
 }	
 
