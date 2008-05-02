@@ -31,6 +31,9 @@ include "RecoTracker/RoadSearchTrackCandidateMaker/data/RoadSearchTrackCandidate
 # RS track fit with material 
 include "RecoTracker/TrackProducer/data/RSFinalFitWithMaterial.cff"
 
+# Iterative Tracking
+include "RecoTracker/IterativeTracking/data/iterativeTk.cff"
+
 ############ new tracking configuration ################
 ### it is placed here as a temporary solution
 
@@ -90,6 +93,6 @@ sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
                         preFilterCmsTracks,
                         tracksWithQuality}
 
-sequence ckftracks = {newTracking}              
+sequence ckftracks = {newTracking, iterTracking}              
 
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
