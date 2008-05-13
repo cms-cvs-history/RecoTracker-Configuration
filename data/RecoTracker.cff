@@ -75,24 +75,27 @@ include "RecoTracker/IterativeTracking/data/iterativeTk.cff"
   replace FittingSmootherWithOutlierRejection.EstimateCut = 20
   replace FittingSmootherWithOutlierRejection.MinNumberOfHits = 3
 
-  module  preFilterCmsTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
-  replace preFilterCmsTracks.src = "newTrackCandidateMaker"
-  replace preFilterCmsTracks.TTRHBuilder =  "WithAngleAndTemplate"
-  replace preFilterCmsTracks.Fitter = "FittingSmootherWithOutlierRejection"
-  replace preFilterCmsTracks.AlgorithmName =  "ctf"
+  module  preFilterFirstStepTracks = ctfWithMaterialTracks from "RecoTracker/TrackProducer/data/CTFFinalFitWithMaterial.cfi"
+  replace preFilterFirstStepTracks.src = "newTrackCandidateMaker"
+  replace preFilterFirstStepTracks.TTRHBuilder =  "WithAngleAndTemplate"
+  replace preFilterFirstStepTracks.Fitter = "FittingSmootherWithOutlierRejection"
+  replace preFilterFirstStepTracks.AlgorithmName =  "ctf"
 
 ### Collection cleaning and quality
   include "RecoTracker/FinalTrackSelectors/data/TracksWithQuality.cff"
-  // defines sequence tracksWithQuality, input is preFilterCmsTracks, output is generalTracks
+  // defines sequence tracksWithQuality, input is preFilterFirstStepTracks, output is firstStepTracksWithQuality
 
+#######################################################################################
+# include track colleciton merging sequence
+  include "RecoTracker/FinalTrackSelectors/data/MergeTrackCollections.cff"
 #######################################################################################
 
 #sequence ckftracks = {globalMixedSeeds,globalPixelSeeds, ckfTrackCandidates,ctfWithMaterialTracks} #only old ctf sequence
 sequence newTracking = {newSeedFromPairs,newSeedFromTriplets,newCombinedSeeds,
                         newTrackCandidateMaker,
-                        preFilterCmsTracks,
+                        preFilterFirstStepTracks,
                         tracksWithQuality}
 
-sequence ckftracks = {newTracking, iterTracking}              
+sequence ckftracks = {newTracking, iterTracking, trackCollectionMerging}              
 
 sequence rstracks  = {roadSearchSeeds, roadSearchClouds, rsTrackCandidates, rsWithMaterialTracks}
