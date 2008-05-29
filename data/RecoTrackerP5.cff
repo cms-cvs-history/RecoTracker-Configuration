@@ -27,3 +27,7 @@ sequence cosmictracksP5 = {cosmicseedfinderP5, cosmictrackfinderP5}
 
 #sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5, trackinfoP5}
 sequence tracksP5 = {cosmictracksP5, ctftracksP5, rstracksP5}
+
+# explicitely switch on hit splitting
+replace ckfTrackCandidatesP5.useHitsSplitting = true
+replace rsTrackCandidatesP5.SplitMatchedHits = true
