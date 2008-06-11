@@ -8,10 +8,7 @@ block RecoTrackerFEVT = {
 
     "keep recoTracks_rsWithMaterialTracks_*_*",
     "keep recoTrackExtras_rsWithMaterialTracks_*_*",
-    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*",
-
-    "keep *_secStep_*_*",
-    "keep *_thStep_*_*"
+    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*"
   }		
 }	
 
@@ -25,11 +22,7 @@ block RecoTrackerRECO = {
 
     "keep recoTracks_rsWithMaterialTracks_*_*",
     "keep recoTrackExtras_rsWithMaterialTracks_*_*",
-    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*",
-
-    "keep *_secStep_*_*",
-    "keep *_thStep_*_*"
-
+    "keep TrackingRecHitsOwned_rsWithMaterialTracks_*_*"
   }		
 }	
 
@@ -38,8 +31,6 @@ block RecoTrackerAOD = {
   untracked vstring outputCommands = {
 #Tracks without extra and hits
     "keep recoTracks_generalTracks_*_*",
-    "keep recoTracks_rsWithMaterialTracks_*_*",
-    "keep recoTracks_secStep_*_*",
-    "keep recoTracks_thStep_*_*"
+    "keep recoTracks_rsWithMaterialTracks_*_*"
   }		
 }	
