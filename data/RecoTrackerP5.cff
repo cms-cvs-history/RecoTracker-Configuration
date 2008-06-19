@@ -2,6 +2,9 @@
 # Tracking configuration file fragment for P5 cosmic running
 #
 
+include "RecoTracker/MeasurementDet/data/MeasurementTrackerESProducer.cff"
+
+
 ## COSMIC TRACK FINDER
 include "RecoTracker/SpecialSeedGenerators/data/CosmicSeedP5Pairs.cff"
 include "RecoTracker/SingleTrackPattern/data/CosmicTrackFinderP5.cff"
