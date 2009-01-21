@@ -29,9 +29,12 @@ from RecoTracker.RoadSearchTrackCandidateMaker.RoadSearchTrackCandidatesP5_cff i
 from RecoTracker.TrackProducer.RSFinalFitWithMaterialP5_cff import *
 # TRACK INFO
 #include "AnalysisAlgos/TrackInfoProducer/data/TrackInfoProducerP5.cff"
+ckfTrackCandidatesP5LHCNavigation    = ckfTrackCandidatesP5.clone(NavigationSchool = cms.string('SimpleNavigationSchool'))
+ctfWithMaterialTracksP5LHCNavigation = ctfWithMaterialTracksP5.clone(src = cms.InputTag("ckfTrackCandidatesP5LHCNavigation"))
 ctftracksP5 = cms.Sequence(combinatorialcosmicseedfinderP5*simpleCosmicBONSeeds*combinedP5SeedsForCTF*
-                           ckfTrackCandidatesP5*
-                           ctfWithMaterialTracksP5)
+                           (ckfTrackCandidatesP5*ctfWithMaterialTracksP5+
+                            ckfTrackCandidatesP5LHCNavigation*ctfWithMaterialTracksP5LHCNavigation))
+
 
 rstracksP5 = cms.Sequence(roadSearchSeedsP5*roadSearchCloudsP5*rsTrackCandidatesP5*rsWithMaterialTracksP5)
 cosmictracksP5 = cms.Sequence(cosmicseedfinderP5*cosmicCandidateFinderP5*cosmictrackfinderP5)

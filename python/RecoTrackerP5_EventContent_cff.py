@@ -13,6 +13,9 @@ RecoTrackerFEVT = cms.PSet(
     outputCommands = cms.untracked.vstring('keep recoTracks_ctfWithMaterialTracksP5_*_*', 
         'keep recoTrackExtras_ctfWithMaterialTracksP5_*_*', 
         'keep TrackingRecHitsOwned_ctfWithMaterialTracksP5_*_*', 
+        'keep recoTracks_ctfWithMaterialTracksP5LHCNavigation_*_*', 
+        'keep recoTrackExtras_ctfWithMaterialTracksP5LHCNavigation_*_*', 
+        'keep TrackingRecHitsOwned_ctfWithMaterialTracksP5LHCNavigation_*_*', 
         'keep recoTracks_rsWithMaterialTracksP5_*_*', 
         'keep recoTrackExtras_rsWithMaterialTracksP5_*_*', 
         'keep TrackingRecHitsOwned_rsWithMaterialTracksP5_*_*', 
@@ -41,6 +44,9 @@ RecoTrackerRECO = cms.PSet(
     outputCommands = cms.untracked.vstring('keep recoTracks_ctfWithMaterialTracksP5_*_*', 
         'keep recoTrackExtras_ctfWithMaterialTracksP5_*_*', 
         'keep TrackingRecHitsOwned_ctfWithMaterialTracksP5_*_*', 
+        'keep recoTracks_ctfWithMaterialTracksP5LHCNavigation_*_*', 
+        'keep recoTrackExtras_ctfWithMaterialTracksP5LHCNavigation_*_*', 
+        'keep TrackingRecHitsOwned_ctfWithMaterialTracksP5LHCNavigation_*_*', 
         'keep recoTracks_rsWithMaterialTracksP5_*_*', 
         'keep recoTrackExtras_rsWithMaterialTracksP5_*_*', 
         'keep TrackingRecHitsOwned_rsWithMaterialTracksP5_*_*', 
@@ -67,6 +73,7 @@ RecoTrackerRECO = cms.PSet(
 #AOD content
 RecoTrackerAOD = cms.PSet(
     outputCommands = cms.untracked.vstring('keep recoTracks_ctfWithMaterialTracksP5_*_*', 
+        'keep recoTracks_ctfWithMaterialTracksP5LHCNavigation_*_*', 
         'keep recoTracks_rsWithMaterialTracksP5_*_*', 
         'keep recoTracks_cosmictrackfinderP5_*_*',
         'keep recoTracks_ctfWithMaterialTracksBeamHaloMuon_*_*',
