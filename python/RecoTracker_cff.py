@@ -15,6 +15,7 @@ from RecoTracker.TrackProducer.RSFinalFitWithMaterial_cff import *
 newCombinedSeeds = RecoTracker.TkSeedGenerator.GlobalCombinedSeeds_cfi.globalCombinedSeeds.clone(
     seedCollections = cms.VInputTag(
       cms.InputTag('initialStepSeeds'),
+      cms.InputTag('highPtTripletStepSeeds'),
       cms.InputTag('lowPtTripletStepSeeds'),
       cms.InputTag('pixelPairStepSeeds')
       )
